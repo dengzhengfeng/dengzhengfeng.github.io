@@ -1,0 +1,660 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="dengzhengfeng1991@126.com" />
+
+
+
+  <meta name="keywords" content="nginx," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="有个需求要给图片加水印，（同时研究了一下nginx的配置）这里加水印的方法是使用Nginx-image-filter-watermak模块 原理  详见github地址  因为整体简单，我就直接写配置了 编译安装  编译nginx（以Fedora为例）  下载nginx源码（当前稳定版）wget http://nginx.org/download/nginx-1.8.1.tar.gz 解压tar">
+<meta name="keywords" content="nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用nginx给图片加水印">
+<meta property="og:url" content="http://yoursite.com/2016/04/12/Nginx-image/index.html">
+<meta property="og:site_name" content="个人博客">
+<meta property="og:description" content="有个需求要给图片加水印，（同时研究了一下nginx的配置）这里加水印的方法是使用Nginx-image-filter-watermak模块 原理  详见github地址  因为整体简单，我就直接写配置了 编译安装  编译nginx（以Fedora为例）  下载nginx源码（当前稳定版）wget http://nginx.org/download/nginx-1.8.1.tar.gz 解压tar">
+<meta property="og:updated_time" content="2017-05-16T01:34:50.071Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用nginx给图片加水印">
+<meta name="twitter:description" content="有个需求要给图片加水印，（同时研究了一下nginx的配置）这里加水印的方法是使用Nginx-image-filter-watermak模块 原理  详见github地址  因为整体简单，我就直接写配置了 编译安装  编译nginx（以Fedora为例）  下载nginx源码（当前稳定版）wget http://nginx.org/download/nginx-1.8.1.tar.gz 解压tar">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 使用nginx给图片加水印 | 个人博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">个人博客</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              使用nginx给图片加水印
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-04-12T12:25:35+08:00" content="2016-04-12">
+            2016-04-12
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/nginx/" itemprop="url" rel="index">
+                  <span itemprop="name">nginx</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/04/12/Nginx-image/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/12/Nginx-image/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>有个需求要给图片加水印，（同时研究了一下nginx的配置）这里加水印的方法是使用Nginx-image-filter-watermak模块</p>
+<p></p><h2 id="theory">原理</h2><p></p>
+<blockquote>
+<p>详见<a href="https://github.com/intaro/nginx-image-filter-watermark" target="_blank" rel="external">github地址</a></p>
+</blockquote>
+<p>因为整体简单，我就直接写配置了</p>
+<p></p><h2 id="setup">编译安装</h2><p></p>
+<blockquote>
+<p>编译nginx（以Fedora为例）</p>
+</blockquote>
+<p>下载nginx源码（当前稳定版）<br><code>wget http://nginx.org/download/nginx-1.8.1.tar.gz</code></p>
+<p>解压<br><code>tar zxvf nginx-1.8.1.tar.gz</code></p>
+<p>下载Nginx-image-filter-watermak<br><code>git clone https://github.com/intaro/nginx-image-filter-watermark.git</code></p>
+<p>复制文件<br><code>cp nginx-image-filter-watermark/ngx_http_image_filter_module.c nginx-1.8.1/src/http/modules/</code></p>
+<p>解决依赖<br><code>sudo dnf install gd-devel pcre-devel libcurl-devel</code><br>或<br><code>sudo yum install gd-devel pcre-devel libcurl-devel</code></p>
+<p>编译nginx<br><code>cd nginx-1.8.1</code><br><code>./configure --with-http_image_filter_module --prefix=&lt;path&gt; /usr/local/nginx</code>（prefix为安装地址）<br><code>make</code><br><code>sudo make install</code></p>
+<p></p><h2 id="conf">配置</h2><p></p>
+<blockquote>
+<p>配置文件在nginx的安装目录中的conf下的nginx.conf</p>
+</blockquote>
+<p>location /img/ {<br>image_filter watermark;#开启图片水印功能</p>
+<p>image_filter_jpeg_quality   95;#图片质量<br>image_filter_buffer         2M;#缓冲大小，如水印文件大时要提高大小</p>
+<p>image_filter_watermark_width_from 400; #当图片宽度大于400时才打水印<br>image_filter_watermark_height_from 400;#当图片高度大于400时才打水印</p>
+<p>image_filter_watermark “PATH_TO_FILE”;#水印文件路径（使用png格式）<br>image_filter_watermark_position center-center;#水印位置<br>｝</p>
+<p></p><h2 id="remark">备注</h2><br>如果需要更复杂的功能，可以使用这个<a href="https://github.com/3078825/ngx_image_thumb" target="_blank" rel="external">模块</a><br>nginx启动脚可以参考如下<p></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line"># chkconfig: - 85 15</div><div class="line"># description: nginx is a World Wide Web server. It is used to serve</div><div class="line"># Source Function Library</div><div class="line">. /etc/init.d/functions</div><div class="line"></div><div class="line"># Nginx Settings</div><div class="line">NGINX_SBIN=&quot;/usr/local/nginx/sbin/nginx&quot;</div><div class="line">NGINX_CONF=&quot;/usr/local/nginx/conf/nginx.conf&quot;</div><div class="line">NGINX_PID=&quot;/usr/local/nginx/logs/nginx.pid&quot;</div><div class="line"></div><div class="line">RETVAL=0</div><div class="line">prog=&quot;Nginx&quot;</div><div class="line"></div><div class="line">start() &#123;</div><div class="line">        echo -n $&quot;Starting $prog: &quot;</div><div class="line">        mkdir -p /dev/shm/nginx_temp</div><div class="line">        daemon $NGINX_SBIN -c $NGINX_CONF</div><div class="line">        RETVAL=$?</div><div class="line">        echo</div><div class="line">        return $RETVAL</div><div class="line">&#125;</div><div class="line"></div><div class="line">stop() &#123;</div><div class="line">        echo -n $&quot;Stopping $prog: &quot;</div><div class="line">        killproc -p $NGINX_PID $NGINX_SBIN -TERM</div><div class="line">        rm -rf /dev/shm/nginx_temp</div><div class="line">        RETVAL=$?</div><div class="line">        echo</div><div class="line">        return $RETVAL</div><div class="line">&#125;</div><div class="line"></div><div class="line">reload()&#123;</div><div class="line">        echo -n $&quot;Reloading $prog: &quot;</div><div class="line">        killproc -p $NGINX_PID $NGINX_SBIN -HUP</div><div class="line">        RETVAL=$?</div><div class="line">        echo</div><div class="line">        return $RETVAL</div><div class="line">&#125;</div><div class="line"></div><div class="line">restart()&#123;</div><div class="line">        stop</div><div class="line">        start</div><div class="line">&#125;</div><div class="line"></div><div class="line">configtest()&#123;</div><div class="line">    $NGINX_SBIN -c $NGINX_CONF -t</div><div class="line">    return 0</div><div class="line">&#125;</div><div class="line"></div><div class="line">case &quot;$1&quot; in</div><div class="line">  start)</div><div class="line">        start</div><div class="line">        ;;</div><div class="line">  stop)</div><div class="line">        stop</div><div class="line">        ;;</div><div class="line">  reload)</div><div class="line">        reload</div><div class="line">        ;;</div><div class="line">  restart)</div><div class="line">        restart</div><div class="line">        ;;</div><div class="line">  configtest)</div><div class="line">        configtest</div><div class="line">        ;;</div><div class="line">  *)</div><div class="line">        echo $&quot;Usage: $0 &#123;start|stop|reload|restart|configtest&#125;&quot;</div><div class="line">        RETVAL=1</div><div class="line">esac</div><div class="line"></div><div class="line">exit $RETVAL</div></pre></td></tr></table></figure>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nginx/" rel="tag">#nginx</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/03/ssm/" rel="prev">搭建一个spring、springMVC、mybatis工程</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/24/maven/" rel="next">通过maven管理项目</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2016/04/12/Nginx-image/"
+                   data-title="使用nginx给图片加水印" data-url="http://yoursite.com/2016/04/12/Nginx-image/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/img/avatar.jpg" alt="沙沙声" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">沙沙声</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">dengzhengfeng1991@126.com</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#theory"><span class="nav-number">1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setup"><span class="nav-number">2.</span> <span class="nav-text">编译安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conf"><span class="nav-number">3.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#remark"><span class="nav-number">4.</span> <span class="nav-text">备注</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">沙沙声</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"rustle"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
