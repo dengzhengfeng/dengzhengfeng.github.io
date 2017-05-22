@@ -30,7 +30,7 @@
 
 
 
-  <meta name="keywords" content="hexo,next," />
+  <meta name="keywords" content="spark,spark streaming," />
 
 
 
@@ -39,19 +39,17 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="hello，一直没有养成写博客的习惯 。当前正好有时间，决定现在开始养成写博客的习惯第一篇就从搭建一个静态博客开始吧，我使用的是Hexo生成静态页面，部署到 Github Pages上 原理  详见官方地址  Github会将以用户名命名的仓库中的master分支的文件生成Github Pages 站点  如用户名为username，在username仓库下的master分支下的文件会被Githu">
-<meta name="keywords" content="hexo,next">
+<meta name="description" content="公司需要一个实时数据分析的需求，数据来源是rocketmq，流处理框架使用了spark streaming 准备环境  构建工具使用sbt 开发ide使用scala idescala与sbt到官网下载配置环境变量就可以了  文件目录结构/build.sbt/src——main————java(java代码目录)————resources(资源目录)————scala(scala代码目录)——tes">
+<meta name="keywords" content="spark,spark streaming">
 <meta property="og:type" content="article">
-<meta property="og:title" content="搭建一个独立的博客">
-<meta property="og:url" content="http://yoursite.com/2015/10/07/hexo/index.html">
+<meta property="og:title" content="使用spark streaming 实时处理来自rocketmq的数据">
+<meta property="og:url" content="http://yoursite.com/2017/05/16/streaming/index.html">
 <meta property="og:site_name" content="个人博客">
-<meta property="og:description" content="hello，一直没有养成写博客的习惯 。当前正好有时间，决定现在开始养成写博客的习惯第一篇就从搭建一个静态博客开始吧，我使用的是Hexo生成静态页面，部署到 Github Pages上 原理  详见官方地址  Github会将以用户名命名的仓库中的master分支的文件生成Github Pages 站点  如用户名为username，在username仓库下的master分支下的文件会被Githu">
-<meta property="og:image" content="http://yoursite.com/img/hexo/sshkey.png">
-<meta property="og:updated_time" content="2017-05-16T01:50:47.697Z">
+<meta property="og:description" content="公司需要一个实时数据分析的需求，数据来源是rocketmq，流处理框架使用了spark streaming 准备环境  构建工具使用sbt 开发ide使用scala idescala与sbt到官网下载配置环境变量就可以了  文件目录结构/build.sbt/src——main————java(java代码目录)————resources(资源目录)————scala(scala代码目录)——tes">
+<meta property="og:updated_time" content="2017-05-22T14:24:52.611Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="搭建一个独立的博客">
-<meta name="twitter:description" content="hello，一直没有养成写博客的习惯 。当前正好有时间，决定现在开始养成写博客的习惯第一篇就从搭建一个静态博客开始吧，我使用的是Hexo生成静态页面，部署到 Github Pages上 原理  详见官方地址  Github会将以用户名命名的仓库中的master分支的文件生成Github Pages 站点  如用户名为username，在username仓库下的master分支下的文件会被Githu">
-<meta name="twitter:image" content="http://yoursite.com/img/hexo/sshkey.png">
+<meta name="twitter:title" content="使用spark streaming 实时处理来自rocketmq的数据">
+<meta name="twitter:description" content="公司需要一个实时数据分析的需求，数据来源是rocketmq，流处理框架使用了spark streaming 准备环境  构建工具使用sbt 开发ide使用scala idescala与sbt到官网下载配置环境变量就可以了  文件目录结构/build.sbt/src——main————java(java代码目录)————resources(资源目录)————scala(scala代码目录)——tes">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -61,7 +59,7 @@
   };
 </script>
 
-  <title> 搭建一个独立的博客 | 个人博客 </title>
+  <title> 使用spark streaming 实时处理来自rocketmq的数据 | 个人博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -176,7 +174,7 @@
           
           
             
-              搭建一个独立的博客
+              使用spark streaming 实时处理来自rocketmq的数据
             
           
         </h1>
@@ -185,8 +183,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-10-07T23:25:44+08:00" content="2015-10-07">
-            2015-10-07
+          <time itemprop="dateCreated" datetime="2017-05-16T10:20:47+08:00" content="2017-05-16">
+            2017-05-16
           </time>
         </span>
 
@@ -195,8 +193,8 @@
             &nbsp; | &nbsp; 分类于
             
               <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/Node-js/" itemprop="url" rel="index">
-                  <span itemprop="name">Node.js</span>
+                <a href="/categories/spark/" itemprop="url" rel="index">
+                  <span itemprop="name">spark</span>
                 </a>
               </span>
 
@@ -211,8 +209,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/10/07/hexo/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/07/hexo/" itemprop="commentsCount"></span>
+              <a href="/2017/05/16/streaming/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/16/streaming/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -226,90 +224,18 @@
       
 
       
-        <span itemprop="articleBody"><p>hello，一直没有养成写博客的习惯 。当前正好有时间，决定现在开始养成写博客的习惯<br>第一篇就从搭建一个静态博客开始吧，我使用的是Hexo生成静态页面，部署到 Github Pages上</p>
-<p></p><h2 id="theory">原理</h2><p></p>
+        <span itemprop="articleBody"><p>公司需要一个实时数据分析的需求，数据来源是rocketmq，流处理框架使用了spark streaming</p>
+<p></p><h2 id="context">准备环境</h2><p></p>
 <blockquote>
-<p>详见<a href="https://help.github.com/categories/github-pages-basics/" target="_blank" rel="external">官方地址</a></p>
+<p>构建工具使用sbt 开发ide使用scala ide<br>scala与sbt到官网下载配置环境变量就可以了</p>
 </blockquote>
-<p>Github会将以用户名命名的仓库中的master分支的文件生成Github Pages 站点</p>
+<p></p><h2 id="directory">文件目录结构</h2><br>/build.sbt<br>/src<br>——main<br>————java(java代码目录)<br>————resources(资源目录)<br>————scala(scala代码目录)<br>——test(测试代码目录)<p></p>
+<p></p><h2 id="plugins">使用插件</h2><p></p>
 <blockquote>
-<p>如用户名为username，在username仓库下的master分支下的文件会被Githubt生成Github Pages 站点，地址为<a href="https://username.github.io" target="_blank" rel="external">https://username.github.io</a></p>
+<p>为了使用scala ide，需要使用sbteclipse-plugin插件;同时为了打包项目，需要sbt-assembly插件</p>
 </blockquote>
-<p>印象中Github生成是按Jekyll格式生成的（除了当前用户名命名的仓库，其它仓库需要分支为gh-pages)</p>
-<blockquote>
-<p>如仓库名project生成的Github Pages地址为<a href="https://username.github.io/project" target="_blank" rel="external">https://username.github.io/project</a>）</p>
-</blockquote>
-<p>Jekyll提供舒适的文档，可以在<a href="http://jekyll.bootcss.com/" target="_blank" rel="external">Jekyll提供的文档</a>中获取更多详情<br>Ruby配置稍微有点麻烦,所以我并没有使用Jekyll，而是使用Hexo</p>
-<p>现在开始配置自己的静态博客了，现在开始一步步搭建吧</p>
-<p></p><h2 id="depend">解决依赖</h2><br>hexo使用的是node.js，为了部署到Github,我们还需要安装Git<p></p>
-<ul>
-<li>注册Github:<br>在<a href="https://github.com/" target="_blank" rel="external">https://github.com/</a> 注册自己的帐号</li>
-<li>安装Git与配置：<br>Fedora可以直接通过dnf（yum）安装<br><code>dnf install git</code>或者<code>yum install git</code><br>或到<a href="http://www.git-scm.com/download" target="_blank" rel="external">官网</a> 下载对应的安装文件</li>
-</ul>
-<blockquote>
-<p>接下来的配置都是以命令的形式生成，如果在windows下，建议使用完成安装后的Git Bash来完成所有命令</p>
-</blockquote>
-<ul>
-<li>配置用户名 <code>git config --global user.name &quot;dengzf&quot;</code></li>
-<li>配置邮箱 <code>git config --global user.email &quot;dengzhengfeng1991@126.com&quot;</code></li>
-<li>生成密钥 <code>ssh-keygen -t rsa -C &quot;dengzhengfeng1991@126.com&quot;</code></li>
-</ul>
-<blockquote>
-<p>生成过程中会提示密钥的生成地址与密码，密码可为空不填写)，生成的公钥在对应home下的.ssh目录下（windows对应的用户目录下）的id_rsa.pub文件，用本文格式打开以备下一阶段使用</p>
-</blockquote>
-<ul>
-<li>配置Github的ssh key<br>登录Github，点击右上角图标-&gt;Settings-&gt;SSH keys-&gt;Add SSH key 在Key一栏输入id_rsa.pub文件里的内容，然后Add key</li>
-</ul>
-<p><img src="/img/hexo/sshkey.png" alt="配置SSH key"><br>测试是否配置成功 ssh -T git@github.com</p>
-<ul>
-<li><p>安装node.js与npm:<br>Fedora可以直接通过dnf（yum）安装<br><code>dnf install node npm</code>或者<code>yum install node npm</code><br>或到<a href="https://nodejs.org/en/download" target="_blank" rel="external">官网</a> 下载对应的安装文件</p>
-</li>
-<li><p>安装Hexo:<br><code>npm install -g hexo-cli</code></p>
-</li>
-</ul>
-<p>准备工作已就绪，接下来就可以生成静态博客了</p>
-<p></p><h2 id="init">生成博客</h2><p></p>
-<ol>
-<li>生成博客项目：hexo init blog (如果第一次生成，进入目录后需要<code>npm install</code>)</li>
-<li>生成静态文件：<code>hexo g</code></li>
-<li>本地运行项目：<code>hexo s</code></li>
-</ol>
-<p>这时后就可以在本地 <a href="http://127.0.0.1:4000/" target="_blank" rel="external">http://127.0.0.1:4000/</a>查看Hello World了</p>
-<blockquote>
-<p>几个Hexo常用命令与简写<br><code>hexo new &quot;文章&quot;</code> 简写 <code>hexo n &quot;文章&quot;</code> #新建文章<br><code>hexo generate</code> 简写 <code>hexo g</code> #生成静态文件<br><code>hexo server</code> 简写 <code>hexo s</code> #启动服务预览<br><code>hexo deploy</code> 简写 <code>hexo d</code> #部署</p>
-</blockquote>
-<p></p><h2 id="deployer">推送到Github</h2><p></p>
-<blockquote>
-<p>生成的静态博客最终是要推送到Github，首先创建名为用户名的仓库如我的用户名是dengzhengfeng就创建名为dengzhengfeng的仓库</p>
-</blockquote>
-<ol>
-<li>安装git插件<br><code>npm install hexo-deployer-git --save</code></li>
-<li>配置文件 _config.yml<br>找到deploy属性，修改成对应的自己的仓库<br><code>deploy:</code><br>&nbsp;&nbsp;<code>type: git</code><br>&nbsp;&nbsp;<code>repositor: git@github.com:dengzhengfeng/dengzhengfeng.github.io.git</code><br>&nbsp;&nbsp;<code>branch: master</code></li>
-<li>最后部署<code>hexo d</code></li>
-</ol>
-<blockquote>
-<p>注意：所有的分号后都有一个空格，完成部署后Github Pages生成页面需要一定的时间，如用户名为username，最终生成页面的地址为<a href="https://username.github.io" target="_blank" rel="external">https://username.github.io</a></p>
-</blockquote>
-<p></p><h2 id="article">生成一篇文章</h2><p></p>
-<ol>
-<li>生成markdown文件<br><code>hexo n &quot;测试文章&quot;</code></li>
-</ol>
-<blockquote>
-<p>会在source/_posts/目录下生成”测试文章.md”，可以在文件中编写符合<a href="http://wowubuntu.com/markdown/" target="_blank" rel="external">Markdown</a> 语法的代码，完成后使用hexo g 生成博客文件hexo s 预览，完成后可以hexo d 推送到Github完成</p>
-</blockquote>
-<p></p><h2 id="next">安装Next主题</h2><p></p>
-<blockquote>
-<p>主题能让我们更方便的管理博客（以<a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="external">Next</a>为例）</p>
-</blockquote>
-<ol>
-<li>在博客对应目录下<br><code>git clone https://github.com/iissnan/hexo-theme-next themes/next</code></li>
-<li>修改站点配置文件 _config.yml（注意 所有:后都有一个空格）<br><code>theme: next</code></li>
-<li>将 language 设置成你所需要的语言<br><code>language: zh-Hans</code></li>
-</ol>
-<blockquote>
-<p>完成后就可以看到最新的主题效果，更多配置可以在<a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="external">Next官网</a>查询到，或使用其它主题，完成独立博客的搭建</p>
-</blockquote>
-<p></p><h2 id="duoshuo">添加评论功能</h2><br>1.注册<a href="http://duoshuo.com/" target="_blank" rel="external">多说</a><br>2.创建站点，填写表单，多说域名 这一栏填写的为 duoshuo_shortname<br>3.创建站点完成后在 站点配置文件 _config.yml 中新增 duoshuo_shortname 字段，值设置成上一步中的值。<p></p>
+<p>首先在build.sbt将项目描述与依赖加入<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">name:=&quot;access-project&quot;</div><div class="line"></div><div class="line">version:=&quot;1.0&quot;</div><div class="line"></div><div class="line">scalaVersion:=&quot;2.11.8&quot;</div><div class="line"></div><div class="line">libraryDependencies += &quot;org.apache.spark&quot; %% &quot;spark-core&quot; % &quot;2.1.0&quot; % &quot;provided&quot;</div><div class="line"></div><div class="line">libraryDependencies += &quot;org.apache.spark&quot; % &quot;spark-streaming_2.11&quot; % &quot;2.1.0&quot; % &quot;provided&quot;</div><div class="line"></div><div class="line">credentials += Credentials(Path.userHome / &quot;.sbt&quot; / &quot;.credentials&quot;)</div></pre></td></tr></table></figure></p>
+<p>填写完build.sbt在终端中进入项目目录，运行sbt初始化<br>完成初始化后</p>
 </span>
       
     </div>
@@ -318,9 +244,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/hexo/" rel="tag">#hexo</a>
+            <a href="/tags/spark/" rel="tag">#spark</a>
           
-            <a href="/tags/next/" rel="tag">#next</a>
+            <a href="/tags/spark-streaming/" rel="tag">#spark streaming</a>
           
         </div>
       
@@ -329,11 +255,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/01/24/maven/" rel="prev">通过maven管理项目</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/12/springboot/" rel="next">使用springboot+jpa快速搭建无xml配置web应用</a>
             
           </div>
         </div>
@@ -358,8 +284,8 @@
         
           <div class="comments" id="comments">
             
-              <div class="ds-thread" data-thread-key="2015/10/07/hexo/"
-                   data-title="搭建一个独立的博客" data-url="http://yoursite.com/2015/10/07/hexo/">
+              <div class="ds-thread" data-thread-key="2017/05/16/streaming/"
+                   data-title="使用spark streaming 实时处理来自rocketmq的数据" data-url="http://yoursite.com/2017/05/16/streaming/">
               </div>
             
           </div>
@@ -441,7 +367,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#theory"><span class="nav-number">1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#depend"><span class="nav-number">2.</span> <span class="nav-text">解决依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#init"><span class="nav-number">3.</span> <span class="nav-text">生成博客</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deployer"><span class="nav-number">4.</span> <span class="nav-text">推送到Github</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#article"><span class="nav-number">5.</span> <span class="nav-text">生成一篇文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#next"><span class="nav-number">6.</span> <span class="nav-text">安装Next主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#duoshuo"><span class="nav-number">7.</span> <span class="nav-text">添加评论功能</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#context"><span class="nav-number">1.</span> <span class="nav-text">准备环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#directory"><span class="nav-number">2.</span> <span class="nav-text">文件目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plugins"><span class="nav-number">3.</span> <span class="nav-text">使用插件</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
